@@ -1,0 +1,64 @@
+dependencies:
+  flet: 0.81.0
+  flutter:
+    sdk: flutter
+  flutter_web_plugins:
+    sdk: flutter
+  package_info_plus: ^9.0.0
+  path: ^1.9.0
+  path_provider: ^2.1.4
+  serious_python: 0.9.10
+  window_manager: ^0.5.1
+dependency_overrides:
+  flet: 0.81.0
+description: ''
+dev_dependencies:
+  flutter_launcher_icons: ^0.14.1
+  flutter_lints: ^2.0.0
+  flutter_native_splash: ^2.4.1
+environment:
+  sdk: '>=3.1.5 <4.0.0'
+flutter:
+  assets:
+  - app/app.zip
+  - app/app.zip.hash
+  uses-material-design: true
+flutter_launcher_icons:
+  adaptive_icon_background: '#ffffff'
+  adaptive_icon_foreground: ../../src/assets/logo_app.png
+  android: true
+  image_path: ../../src/assets/logo_app.png
+  image_path_android: ../../src/assets/logo_app.png
+  image_path_ios: ../../src/assets/logo_app.png
+  ios: true
+  macos:
+    generate: true
+    image_path: ../../src/assets/logo_app.png
+  remove_alpha_ios: true
+  web:
+    generate: true
+    image_path: ../../src/assets/logo_app.png
+  windows:
+    generate: true
+    icon_size: 256
+    image_path: ../../src/assets/logo_app.png
+flutter_native_splash:
+  android: true
+  android_12:
+    image: ../../src/assets/logo_app.png
+    image_dark: ../../src/assets/logo_app.png
+  color: '#ffffff'
+  color_dark: '#222222'
+  image: ../../src/assets/logo_app.png
+  image_android: ../../src/assets/logo_app.png
+  image_dark: ../../src/assets/logo_app.png
+  image_dark_android: ../../src/assets/logo_app.png
+  image_dark_ios: ../../src/assets/logo_app.png
+  image_dark_web: ../../src/assets/logo_app.png
+  image_ios: ../../src/assets/logo_app.png
+  image_web: ../../src/assets/logo_app.png
+  ios: true
+  web: true
+name: proyecto_cepav
+publish_to: none
+version: 1.0.0+1

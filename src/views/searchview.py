@@ -1,6 +1,6 @@
 import flet as ft
 from .navigationbar import NavigationBar
-from src.constrollers.search_controller import SearchController
+from src.controllers.search_controller import SearchController
 from src.views.navigation import navigate
 # Asumo que crearás una vista para el detalle de la canción o reproductor
 # from src.views.PlayerView import PlayerView 
