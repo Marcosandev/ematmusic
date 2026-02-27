@@ -10,9 +10,11 @@ class NavigationBar(ft.NavigationBar):
 
         bgcolor = ft.Colors.WHITE if light else ft.Colors.BLACK
         icon_color = ft.Colors.BLACK if light else ft.Colors.WHITE
+        indicator_color = ft.Colors.GREY_300 if light else ft.Colors.GREY_800
         
         super().__init__(
             selected_index=selected_index,
+            indicator_color=indicator_color,
             destinations=[
                 ft.NavigationBarDestination(
                     icon=(ft.Icon(ft.Icons.HOME_OUTLINED, color=icon_color) if light else ft.Icons.HOME_OUTLINED),

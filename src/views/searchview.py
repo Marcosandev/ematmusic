@@ -10,7 +10,6 @@ class SearchView(ft.Column):
         super().__init__(
             expand=True,
             alignment=ft.MainAxisAlignment.START,
-            horizontal_alignment=ft.CrossAxisAlignment.CENTER,
         )
         self.main_page = page
         self.controller = SearchController()
@@ -59,26 +58,23 @@ class SearchView(ft.Column):
         self.controls = [
             ft.Container(
                 content=ft.Column([
-                    ft.Text("Buscar Música", size=24, weight=ft.FontWeight.BOLD),
-                    ft.Divider(height=10, color=ft.Colors.TRANSPARENT),
+                    ft.Text("Buscar", size=28, weight=ft.FontWeight.BOLD),
                     
-                    # EL AJUSTE ESTÁ AQUÍ:
-                    # Al meter el TextField(expand=True) en un Row, solo se estira a lo ancho
                     ft.Row([self.search_field]), 
                     
                     ft.Divider(height=5, color=ft.Colors.TRANSPARENT),
                     row_botones,
-                    ft.Divider(height=20),
+                    ft.Divider(height=20, color="#1E2126"),
                     self.resultados_col
                 ], expand=True),
-                padding=20,
+                padding=25,
                 expand=True
             )
         ]
 
     def cambiar_modo(self, mode):
         self.mode = mode
-        # Usamos self.main_page porque self.page da error de setter
+
         is_dark = self.main_page.theme_mode == ft.ThemeMode.DARK
         active_color = ft.Colors.BLUE_900 if is_dark else ft.Colors.BLUE_50
         
@@ -98,7 +94,7 @@ class SearchView(ft.Column):
         query = self.search_field.value
         self.resultados_col.controls = []
         
-        if not query or len(query) < 2: # Evitar búsquedas vacías o muy cortas
+        if not query or len(query) < 1: # Evitar búsquedas vacías o muy cortas
             self.resultados_col.update()
             return
             
@@ -110,9 +106,9 @@ class SearchView(ft.Column):
                     ft.ListTile(
                         leading=ft.Icon(ft.Icons.MUSIC_NOTE, color=ft.Colors.BLUE),
                         title=ft.Text(song['title'], weight=ft.FontWeight.BOLD),
-                        subtitle=ft.Text(f"{song.get('artist', 'Artista desconocido')} • {song.get('duration', '0:00')}"),
-                        trailing=ft.IconButton(icon=ft.Icons.PLAY_ARROW_ROUNDED, on_click=lambda e, s=song: self.play_song(s)),
-                        on_click=lambda e, s=song: self.play_song(s)
+                        subtitle=ft.Text(f"{song.get('artist', 'Artista desconocido')} • {song.get('genero', 'Género desconocido')}"),
+                        trailing=ft.IconButton(icon=ft.Icons.PLAY_ARROW_ROUNDED, on_click=lambda e, s=song: self.reproducir(s['url'])),
+                        on_click=lambda e, s=song: self.reproducir(s['url'])
                     )
                 )
         else:
@@ -121,17 +117,17 @@ class SearchView(ft.Column):
                 self.resultados_col.controls.append(
                     ft.ListTile(
                         leading=ft.CircleAvatar(
-                            foreground_image_url=artist.get('image', ""),
+                            foreground_image_src=artist.get('image', ""),
                             content=ft.Text(artist['name'][0])
                         ),
                         title=ft.Text(artist['name']),
-                        subtitle=ft.Text("Artista"),
-                        on_click=lambda e, a=artist: print(f"Ir al perfil de artista: {a['name']}")
+                        subtitle=ft.Text("Artista"), 
                     )
                 )
         
         self.resultados_col.update()
 
-    def play_song(self, song):
-        # Aquí llamarías a tu lógica de reproducción
-        print(f"Reproduciendo: {song['title']}")
+    def reproducir(self, url):
+        import webbrowser
+        if url:
+            webbrowser.open(url)

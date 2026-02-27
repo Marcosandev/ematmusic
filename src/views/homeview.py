@@ -1,5 +1,8 @@
 import flet as ft
 import datetime
+from src.views.navigation import navigate
+from src.views.albumsview import AlbumsView
+from src.views.favoritesview import FavoritesView
 
 class HomeView(ft.Column):
     def __init__(self, page: ft.Page):
@@ -17,25 +20,25 @@ class HomeView(ft.Column):
         self.controls.append(
             ft.Container(
                 content=ft.Column([
-                    ft.Text("Tu Biblioteca", size=20, weight=ft.FontWeight.BOLD),
+                    ft.Text("Ver", size=20, weight=ft.FontWeight.BOLD),
                     ft.ResponsiveRow([
-                        self._boton_biblioteca("Todas las Canciones", ft.Icons.MUSIC_NOTE_ROUNDED, ft.Colors.BLUE),
                         self._boton_biblioteca("Álbumes", ft.Icons.ALBUM_ROUNDED, ft.Colors.PURPLE),
                         self._boton_biblioteca("Favoritos", ft.Icons.FAVORITE_ROUNDED, ft.Colors.RED),
                     ], spacing=10)
                 ]),
-                padding=ft.padding.symmetric(horizontal=20)
+                padding=ft.Padding(20, 0, 20, 0)
             )
         )
 
-        # 3. ESCUCHADO RECIENTEMENTE (Cambio aquí)
         self.controls.append(
             ft.Container(
                 content=ft.Column([
-                    ft.Text("Escuchado recientemente", size=20, weight=ft.FontWeight.BOLD),
-                    self._fila_recientes(),
+                    ft.Text("Descripción", size=20, weight=ft.FontWeight.BOLD),
+                    # Llamamos al método solo con el texto necesario
+                    self.descripcion("Bienvenid@ a nuestra app de música EmatMusic."),
+                    self.descripcion("EmatMusic es un reproductor de musica local que te permite escuchar musica que tu descargues en tu dispositivo, aqui podras explorar tus álbumes y guardar tus canciones favoritas para acceder a ellas rápidamente."),
                 ]),
-                padding=ft.padding.symmetric(horizontal=20)
+                padding=ft.Padding(20, 0, 20, 0)
             )
         )
 
@@ -52,14 +55,16 @@ class HomeView(ft.Column):
             content=ft.Row([
                 ft.Column([
                     ft.Text(saludo, size=28, weight=ft.FontWeight.BOLD),
-                    ft.Text("¿Qué vamos a escuchar hoy?", color=ft.Colors.GREY_500),
+                    ft.Text("¿Qué vas a escuchar hoy?", color=ft.Colors.GREY_500),
                 ]),
-                ft.IconButton(ft.Icons.SETTINGS_ROUNDED, icon_color=ft.Colors.GREY_400)
             ], alignment=ft.MainAxisAlignment.SPACE_BETWEEN),
-            padding=ft.padding.only(left=20, right=20, top=20)
+            padding=ft.Padding(20, 8, 20, 0)
         )
 
     def _boton_biblioteca(self, titulo, icono, color):
+        # Asignamos la vista correspondiente
+        destino = AlbumsView if titulo == "Álbumes" else FavoritesView
+        
         return ft.Container(
             content=ft.Row([
                 ft.Icon(icono, color=color, size=30),
@@ -68,37 +73,17 @@ class HomeView(ft.Column):
             bgcolor=ft.Colors.GREY_900 if self.main_page.theme_mode == ft.ThemeMode.DARK else ft.Colors.GREY_100,
             padding=15,
             border_radius=12,
-            col={"sm": 12, "md": 4}, 
-            on_click=lambda _: print(f"Navegando a: {titulo}"),
+            col={"sm": 6}, 
+            on_click=lambda _: navigate(self.main_page, destino),
         )
 
-    def _fila_recientes(self):
-        # Aquí simulamos las últimas canciones que el usuario reprodujo
-        recientes = [
-            {"name": "Última escuchada", "artist": "Artista Local", "img": ft.Icons.PLAY_CIRCLE_FILL},
-            {"name": "Hace 10 min", "artist": "Album Desconocido", "img": ft.Icons.HISTORY},
-            {"name": "Ayer", "artist": "Carpeta Música", "img": ft.Icons.AUDIOTRACK},
-            {"name": "Favorito antiguo", "artist": "Desconocido", "img": ft.Icons.MUSIC_NOTE},
-        ]
-
-        items = []
-        for s in recientes:
-            items.append(
-                ft.Container(
-                    content=ft.Column([
-                        ft.Container(
-                            # Usamos una caja gris oscuro para simular la portada
-                            content=ft.Icon(s["img"], size=50, color=ft.Colors.BLUE_GREY_400),
-                            width=150, height=150,
-                            bgcolor=ft.Colors.GREY_900 if self.main_page.theme_mode == ft.ThemeMode.DARK else ft.Colors.GREY_300,
-                            border_radius=15,
-                            alignment=ft.MainAxisAlignment.CENTER
-                        ),
-                        ft.Text(s["name"], weight=ft.FontWeight.BOLD, size=14, max_lines=1),
-                        ft.Text(s["artist"], size=12, color=ft.Colors.GREY_400, max_lines=1)
-                    ]),
-                    width=150,
-                    on_click=lambda e, name=s["name"]: print(f"Reproduciendo desde recientes: {name}")
-                )
-            )
-        return ft.Row(items, scroll=ft.ScrollMode.ADAPTIVE, spacing=20)
+    def descripcion(self, texto):
+        # ¡IMPORTANTE! Agregar el 'return' para que el contenedor se añada a la lista
+        return ft.Container(
+            content=ft.Text(
+                texto, 
+                size=16, 
+                color=ft.Colors.WHITE,
+            ),
+            padding=ft.padding.only(top=5)
+        )
