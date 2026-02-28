@@ -95,7 +95,7 @@ class PlaylistView(ft.Stack):
             ft.Container(
                 content=ft.Column([
                     self._crear_header(),
-                    ft.Divider(height=20, color=ft.Colors.OUTLINE_VARIANT if not es_oscuro else "#1E2126"),
+                    ft.Divider(height=20, color="#1E2126"),
                     ft.Container(
                         content=self.lista_canciones, 
                         expand=True, 

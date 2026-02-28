@@ -34,11 +34,11 @@ class HomeView(ft.Column):
             ft.Container(
                 content=ft.Column([
                     ft.Text("Descripción", size=20, weight=ft.FontWeight.BOLD),
-                    # Llamamos al método solo con el texto necesario
-                    self.descripcion("Bienvenid@ a nuestra app de música EmatMusic."),
-                    self.descripcion("EmatMusic es un reproductor de musica local que te permite escuchar musica que tu descargues en tu dispositivo, aqui podras explorar tus álbumes y guardar tus canciones favoritas para acceder a ellas rápidamente."),
+                    ft.ResponsiveRow([
+                        self.texto_boton(f"¡Bienvenid@ a nuestra app de música EmatMusic.\n\nEmatMusic es un reproductor de musica local que te permite escuchar musica que tu descargues en tu dispositivo, aqui podras explorar tus álbumes y guardar tus canciones favoritas para acceder a ellas rápidamente."),
+                    ], spacing=10)
                 ]),
-                padding=ft.Padding(20, 0, 20, 0)
+                padding=15,
             )
         )
 
@@ -85,5 +85,20 @@ class HomeView(ft.Column):
                 size=16, 
                 color=ft.Colors.WHITE,
             ),
-            padding=ft.padding.only(top=5)
+            padding=ft.padding.only(top=5)   
         )
+    
+    def texto_boton(self, texto):
+        return ft.Container(
+            content=ft.Text(
+                texto,
+                size=16,
+                weight=ft.FontWeight.W_400,
+                color=ft.Colors.WHITE if self.main_page.theme_mode == ft.ThemeMode.DARK else ft.Colors.GREY_900,
+            ),
+            padding=15,
+            
+            border_radius=12,
+            bgcolor=ft.Colors.GREY_900 if self.main_page.theme_mode == ft.ThemeMode.DARK else ft.Colors.GREY_100,
+        )
+    

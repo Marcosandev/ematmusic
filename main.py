@@ -5,7 +5,7 @@ import os
 # 1. Obtenemos la ruta absoluta de 'src/main.py'
 current_dir = os.path.dirname(os.path.abspath(__file__))
 
-# 2. Subimos un nivel para obtener la ruta de la raíz del proyecto ('eventmatch-eventmatch')
+# 2. Subimos un nivel para obtener la ruta de la raíz del proyecto
 project_root = os.path.dirname(current_dir)
 
 # 3. Agregamos la raíz a la lista de rutas donde Python busca módulos
@@ -17,12 +17,16 @@ import flet as ft
 from src.views.homeview import HomeView
 from src.views.navigationbar import NavigationBar
 from src.views.playlistview import PlaylistView
+from src.views.app_header import AppHeader
 
 def main(page: ft.Page):
     # Configuración principal de la página
-    page.title = "Music App"
+    page.title = "EmatMusic"
     
     page.theme_mode = ft.ThemeMode.DARK
+    
+    # Create and add the app header
+    page.app_header = AppHeader(page)
     
     page.window.width = 400
     page.window.height = 750
@@ -49,7 +53,7 @@ def main(page: ft.Page):
             page.views.append(
                 ft.View(
                     route="/",
-                    controls=[HomeView(page)],
+                    controls=[page.app_header, HomeView(page)],
                     navigation_bar=nav,
                 )
             )
@@ -57,7 +61,7 @@ def main(page: ft.Page):
             page.views.append(
                 ft.View(
                     route="/playlist",
-                    controls=[PlaylistView(page)],
+                    controls=[page.app_header, PlaylistView(page)],
                     navigation_bar=nav,
                 )
             )

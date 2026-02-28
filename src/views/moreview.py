@@ -115,17 +115,4 @@ class MoreView(ft.Column):
 
     def _cambiar_tema(self, e):
         self.main_page.theme_mode = ft.ThemeMode.DARK if e.control.value else ft.ThemeMode.LIGHT
-        
-        # Recrear el NavigationBar con los nuevos colores
-        if hasattr(self.main_page, "navigation_bar"):
-            from .navigationbar import NavigationBar
-            selected_idx = self.main_page.navigation_bar.selected_index
-            self.main_page.navigation_bar = NavigationBar(self.main_page, selected_index=selected_idx)
-            
-            # Restaurar la barra de navegación en la vista actual
-            for view in self.main_page.views:
-                if hasattr(view, "navigation_bar"):
-                    view.navigation_bar = self.main_page.navigation_bar
-                    break
-        
         self.main_page.update()
